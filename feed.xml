@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wingzki&#39;s Blog</title>
+    <description>An iOS Developer</description>
+    <link>http://wingzki.github.io/</link>
+    <atom:link href="http://wingzki.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 22 Jul 2016 13:59:39 +0800</pubDate>
+    <lastBuildDate>Fri, 22 Jul 2016 13:59:39 +0800</lastBuildDate>
+    <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Swizzle的时候为什么要使用class_addMethod方法</title>
+        <description>&lt;h1&gt;Swizzle的最佳实践&lt;/h1&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot; data-lang=&quot;Objective-C&quot;&gt;&lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;swizzleInstanceSelector:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;SEL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;originalSelector&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;withNewSelector:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;SEL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;newSelector&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;originalMethod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;class_getInstanceMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;originalSelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newMethod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;class_getInstanceMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newSelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;BOOL&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;methodAdded&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;class_addMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;originalSelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method_getImplementation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;newMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method_getTypeEncoding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;newMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;methodAdded&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;class_replaceMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newSelector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method_getImplementation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;originalMethod&lt;/span&gt;&lt;span...</description>
+        <pubDate>Fri, 22 Jul 2016 00:00:00 +0800</pubDate>
+        <link>http://wingzki.github.io/Swizzle/</link>
+        <guid isPermaLink="true">http://wingzki.github.io/Swizzle/</guid>
+        
+        <category>reactivecocoa</category>
+        
+        
+        <category>reactivecocoa</category>
+        
+      </item>
+    
+      <item>
+        <title>使用ReactiveCocoa实现一个手机验证码发送按钮</title>
+        <description>&lt;p&gt;更新&lt;/p&gt; &lt;p&gt;这几天在网上看到了几个其它的类似实现，对比了一下，感觉在可扩展性和代码结构上我这种实现方法都是更优的。而且使用UIButton的&lt;code&gt;rac_command&lt;/code&gt;来绑定事件要明显优于使用&lt;code&gt;rac_signalForControlEvents&lt;/code&gt;方法，因为使用&lt;code&gt;rac_command&lt;/code&gt;可以省去禁用button的相关操作。唯一一个不爽的地方是使用了一个NSInteger类型的临时变量做计数器，我最近一直在考虑怎么干掉它，等我想明白了会更新代码。&lt;/p&gt; &lt;p&gt;更新完毕&lt;/p&gt; &lt;hr&gt; &lt;p&gt;对于ReactiveCocoa这个学些曲线非常陡峭的类库来说，一但掌握了正确的使用方法，可以有效的提升开发效率。不过如果使用方法不得当，后果也是灾难性的。请根据实际情况酌情考虑使用。&lt;/p&gt; &lt;p&gt;以上&lt;/p&gt; &lt;hr&gt; &lt;p&gt;在移动应用中手机验证码发送是一个常规的需求，在公司最新版的应用中我尝试了一下用ReactiveCocoa去实现这个功能，效果拔群。&lt;/p&gt; &lt;h2&gt;将请求封装为一个Signal&lt;/h2&gt; &lt;p&gt;首先把用于从服务器请求验证法的Http请求封装为一个Signal，下面这个方法可以很方便的把一个异步操作变为一个Signal。&lt;/p&gt; &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;+ (RACSignal *)createSignal:(RACDisposable * (^)(id&amp;lt;RACSubscriber&amp;gt; subscriber))didSubscribe &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot; data-lang=&quot;Objective-C&quot;&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RACSignal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;startCodeRequestWithPhoneNumber:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;phoneNumber&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;countryCode:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;countryCode&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RACSignal&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;createSignal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RACDisposable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RACSubscriber&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;subscriber&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;QYVerifyCodeRequest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;QYVerifyCodeRequest&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;initWithPhoneNumber&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phoneNumber&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;countryCode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;countryCode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;startWithSuccess&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;id&lt;/span&gt;...</description>
+        <pubDate>Thu, 12 May 2016 00:00:00 +0800</pubDate>
+        <link>http://wingzki.github.io/Reactivecocoa-Codebutton/</link>
+        <guid isPermaLink="true">http://wingzki.github.io/Reactivecocoa-Codebutton/</guid>
+        
+        <category>reactivecocoa</category>
+        
+        
+        <category>reactivecocoa</category>
+        
+      </item>
+    
+      <item>
+        <title>First Commit</title>
+        <description>&lt;h1&gt;为什么开始写博客&lt;/h1&gt;
+
+&lt;p&gt;传说一个程序员要想找到好工作就要有一个技术Blog，然而我已经有了一份自认为还不错的工作。&lt;/p&gt;
+
+&lt;p&gt;好吧，我只能违心的说因为我是一个有追求的程序员，所以我打算开始写博客。&lt;/p&gt;
+
+&lt;h1&gt;会经常更新吗&lt;/h1&gt;
+
+&lt;p&gt;我打算一个月更新两篇，然而这只是打算，很可能你看到的就是最后一篇，虽然我知道这是不对的。&lt;/p&gt;
+
+&lt;h1&gt;Blog的文章一般是什么内容&lt;/h1&gt;
+
+&lt;p&gt;我猜大部分应该是技术类文章，因为我是个iOS程序员。不排除有吐槽文章的存在，没准也会放几张高达的照片。&lt;/p&gt;
+</description>
+        <pubDate>Fri, 06 May 2016 00:00:00 +0800</pubDate>
+        <link>http://wingzki.github.io/First-Commit/</link>
+        <guid isPermaLink="true">http://wingzki.github.io/First-Commit/</guid>
+        
+        <category>welcome</category>
+        
+        
+        <category>welcome</category>
+        
+      </item>
+    
+  </channel>
+</rss>

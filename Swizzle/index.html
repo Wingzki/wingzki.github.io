@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://wingzki.github.io" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title> Swizzle的时候为什么要使用class_addMethod方法 | Wingzki</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="">
+<meta name="keywords" content="Runtime">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://wingzki.github.io/Swizzle/">
+<meta property="og:title" content=" Swizzle的时候为什么要使用class_addMethod方法 | Wingzki">
+<meta property="og:description" content="">
+<meta property="og:site_name" content="Wingzki">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="">
+<meta property="og:image" content="http://wingzki.github.io">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://wingzki.github.io">
+<meta name="twitter:title" content=" Swizzle的时候为什么要使用class_addMethod方法 | Wingzki">
+<meta name="twitter:description" content="">
+<meta name="twitter:image:src" content="http://wingzki.github.io">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://wingzki.github.io/assets/ico/apple-touch-icon-114-923860ccd1961134acc9b15cb0c2bd58.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://wingzki.github.io/assets/ico/apple-touch-icon-72-328c9f2cc26bd042c9a33ac6c426ed6f.png">
+<link rel="apple-touch-icon" href="http://wingzki.github.io/assets/ico/apple-touch-icon-57-d8bed54f3b3b01450f2c2ff1adf141ca.png">
+<link rel="shortcut icon" href="http://wingzki.github.io/assets/ico/favicon-96ff269699aee05d4bebaf2c5e47a07e.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://wingzki.github.io/Swizzle/">
+<link rel="alternate" type="application/rss+xml" title="Wingzki" href="http://wingzki.github.io/feed.xml">
+<link rel="stylesheet" href="/assets/main-e03fd29918e6a55fb4e40f4e044772fc.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "http://wingzki.github.io",
+  "url": "http://http://wingzki.github.io/",
+  "description": "An iOS Developer"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = 'wingzkisblog',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-52446115-1']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+    <meta name="robots" content="noindex"> <!--=====  Please remove it ! ! !  ======-->
+    <meta name="googlebot" content="noindex"> <!--=====  Please remove it ! ! !  ======-->
+  </head>
+  <body class="post-template single">
+    <header class="header">
+  <div class="container">
+    <h1><a href="/"><strong>wingzki</strong>.github.io</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+      <article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1>Swizzle的时候为什么要使用class_addMethod方法</h1>
+    <div class="post-meta">
+      <time datetime="2015-10-13">
+        <i class="fa fa-calendar-o"></i> <time datetime="2016-07-22"> 2016-07-22
+      </time>
+      <span>
+        <i class="fa fa-comments"></i> <a href="/Swizzle/#disqus_thread" data-disqus-identifier="/Swizzle">Leave a comment</a>
+      </span>
+      <span>
+        <i class="fa fa-folder-open-o"></i> <a href="/category/reactivecocoa/">ReactiveCocoa</a>
+      </span>
+    </div>
+  </header>
+  <h1>Swizzle的最佳实践</h1>
+<div class="highlight"><pre><code class="language-Objective-C" data-lang="Objective-C"><span class="p">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">swizzleInstanceSelector:</span><span class="p">(</span><span class="kt">SEL</span><span class="p">)</span><span class="nv">originalSelector</span>
+                 <span class="nf">withNewSelector:</span><span class="p">(</span><span class="kt">SEL</span><span class="p">)</span><span class="nv">newSelector</span> <span class="p">{</span>
+    <span class="n">Method</span> <span class="n">originalMethod</span> <span class="o">=</span> <span class="n">class_getInstanceMethod</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> <span class="n">originalSelector</span><span class="p">);</span>
+    <span class="n">Method</span> <span class="n">newMethod</span> <span class="o">=</span> <span class="n">class_getInstanceMethod</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> <span class="n">newSelector</span><span class="p">);</span>
+    <span class="kt">BOOL</span> <span class="n">methodAdded</span> <span class="o">=</span> <span class="n">class_addMethod</span><span class="p">([</span><span class="nb">self</span> <span class="k">class</span><span class="p">],</span>
+                                       <span class="n">originalSelector</span><span class="p">,</span>
+                                       <span class="n">method_getImplementation</span><span class="p">(</span><span class="n">newMethod</span><span class="p">),</span>
+                                       <span class="n">method_getTypeEncoding</span><span class="p">(</span><span class="n">newMethod</span><span class="p">));</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">methodAdded</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">class_replaceMethod</span><span class="p">([</span><span class="nb">self</span> <span class="k">class</span><span class="p">],</span>
+                            <span class="n">newSelector</span><span class="p">,</span>
+                            <span class="n">method_getImplementation</span><span class="p">(</span><span class="n">originalMethod</span><span class="p">),</span>
+                            <span class="n">method_getTypeEncoding</span><span class="p">(</span><span class="n">originalMethod</span><span class="p">));</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">method_exchangeImplementations</span><span class="p">(</span><span class="n">originalMethod</span><span class="p">,</span> <span class="n">newMethod</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>大部分看文章的人应该都知道一个完美的Swizzle方法应该长这个模样，网上也是资料一大把，用起来也非常容易，无非就是在<code>+load</code>方法中调用一下就行了。但是有多少人仔细看过这段代码，有多少人完全理解每一行作用，反正在之前的很长一段时间里我是一知半解的半懵逼状态。</p>
+<p>很多文章都有写对这段代码的分析和研究，但我发现并没有什么文章对其中的一段代码有很好的解释，一般只是说为了避免父类的方法被替换掉，仅此而己。就是下面这句，以及后面的if语句： </p>
+<div class="highlight"><pre><code class="language-Objective-C" data-lang="Objective-C"> <span class="kt">BOOL</span> <span class="n">methodAdded</span> <span class="o">=</span> <span class="n">class_addMethod</span><span class="p">([</span><span class="nb">self</span> <span class="k">class</span><span class="p">],</span>
+                                       <span class="n">originalSelector</span><span class="p">,</span>
+                                       <span class="n">method_getImplementation</span><span class="p">(</span><span class="n">newMethod</span><span class="p">),</span>
+                                       <span class="n">method_getTypeEncoding</span><span class="p">(</span><span class="n">newMethod</span><span class="p">));</span>
+</code></pre></div>
+<p>我写这篇文章主要目的就是探讨一下这段代码究竟为什么要出现在这里，以及没有这一段究竟会发生什么。</p>
+<h1>如果不这样会发生什么</h1>
+<div class="highlight"><pre><code class="language-Objective-C" data-lang="Objective-C"><span class="p">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">swizzleInstanceSelector:</span><span class="p">(</span><span class="kt">SEL</span><span class="p">)</span><span class="nv">originalSelector</span>
+                 <span class="nf">withNewSelector:</span><span class="p">(</span><span class="kt">SEL</span><span class="p">)</span><span class="nv">newSelector</span> <span class="p">{</span>
+    <span class="n">Method</span> <span class="n">originalMethod</span> <span class="o">=</span> <span class="n">class_getInstanceMethod</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> <span class="n">originalSelector</span><span class="p">);</span>
+    <span class="n">Method</span> <span class="n">newMethod</span> <span class="o">=</span> <span class="n">class_getInstanceMethod</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> <span class="n">newSelector</span><span class="p">);</span>
+    <span class="n">method_exchangeImplementations</span><span class="p">(</span><span class="n">originalMethod</span><span class="p">,</span> <span class="n">newMethod</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>如果没有这一部分的代码究竟会发生什么呢？总的来说在特定情况下会发生很可怕的事情。这种特定情况就是被替换的方法是在父类中实现的，而当前类并没有override这个方法。这种情况下就会将父类的方法和我们的新方法进行互换，当我们使用子类或子类的子类或子类的子类的子类时（你们懂得）并不会发生什么悲剧，但是一旦你调用了父类的这个方法时悲剧就这么突如其来的发生了，让人猝不及防。</p>
+<h1>空口无凭，咱举个栗子</h1>
+<h2>我们先试试这样</h2>
+<div class="highlight"><pre><code class="language-Objective-C" data-lang="Objective-C"><span class="k">@implementation</span> <span class="nc">SwizzleTest0</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">log</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;SwizzleTest0&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+<span class="k">@implementation</span> <span class="nc">SwizzleTest1</span>
+<span class="p">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">load</span> <span class="p">{</span>
+    <span class="p">[</span><span class="nb">self</span> <span class="nl">swizzleInstanceSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">log</span><span class="p">)</span> <span class="nl">withNewSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">new_log</span><span class="p">)];</span>
+<span class="p">}</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">new_log</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;SwizzleTest1&quot;</span><span class="p">);</span>
+    <span class="p">[</span><span class="nb">self</span> <span class="n">new_log</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">log</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;newlog&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+<span class="p">[[[</span><span class="n">SwizzleTest0</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">]</span> <span class="n">log</span><span class="p">];</span>
+<span class="p">[[[</span><span class="n">SwizzleTest1</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">]</span> <span class="n">log</span><span class="p">];</span>
+</code></pre></div>
+<p>忽略我没有在<code>dispatch_once</code>中调用Swizzle方法，这不省事嘛。这段代码理论上讲应该正确运行，不会发生不幸。因为这段代码并没有达成我们的边界条件成就，也就是我们说我<code>override</code>了<code>log</code>方法。看看结果：</p>
+<div class="highlight"><pre><code class="language-Objective-C" data-lang="Objective-C"><span class="mi">2016</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mi">22</span> <span class="mi">11</span><span class="o">:</span><span class="mi">53</span><span class="o">:</span><span class="mf">46.772</span> <span class="n">QYKit_Example</span><span class="p">[</span><span class="mi">18139</span><span class="o">:</span><span class="mi">553424</span><span class="p">]</span> <span class="n">SwizzleTest0</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mi">22</span> <span class="mi">11</span><span class="o">:</span><span class="mi">53</span><span class="o">:</span><span class="mf">46.776</span> <span class="n">QYKit_Example</span><span class="p">[</span><span class="mi">18139</span><span class="o">:</span><span class="mi">553424</span><span class="p">]</span> <span class="n">SwizzleTest1</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mi">22</span> <span class="mi">11</span><span class="o">:</span><span class="mi">53</span><span class="o">:</span><span class="mf">46.776</span> <span class="n">QYKit_Example</span><span class="p">[</span><span class="mi">18139</span><span class="o">:</span><span class="mi">553424</span><span class="p">]</span> <span class="n">newlog</span>
+</code></pre></div>
+<p>和预期是一样的。</p>
+<h2>我们再试试这个样子</h2>
+<div class="highlight"><pre><code class="language-Objective-C" data-lang="Objective-C"><span class="k">@implementation</span> <span class="nc">SwizzleTest0</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">log</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;SwizzleTest0&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+<span class="k">@implementation</span> <span class="nc">SwizzleTest1</span>
+<span class="p">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">load</span> <span class="p">{</span>
+    <span class="p">[</span><span class="nb">self</span> <span class="nl">swizzleInstanceSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">log</span><span class="p">)</span> <span class="nl">withNewSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">new_log</span><span class="p">)];</span>
+<span class="p">}</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">new_log</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;SwizzleTest1&quot;</span><span class="p">);</span>
+    <span class="p">[</span><span class="nb">self</span> <span class="n">new_log</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+<span class="p">[[[</span><span class="n">SwizzleTest1</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">]</span> <span class="n">log</span><span class="p">];</span>
+</code></pre></div>
+<p>感觉依然不会发生悲剧，因为我们虽然没有<code>override</code><code>log</code>方法，但我们也没调用父类的方法不是。</p>
+<div class="highlight"><pre><code class="language-Objective-C" data-lang="Objective-C"><span class="mi">2016</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mi">22</span> <span class="mi">11</span><span class="o">:</span><span class="mi">59</span><span class="o">:</span><span class="mf">33.401</span> <span class="n">QYKit_Example</span><span class="p">[</span><span class="mi">18961</span><span class="o">:</span><span class="mi">582784</span><span class="p">]</span> <span class="n">SwizzleTest1</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mi">22</span> <span class="mi">11</span><span class="o">:</span><span class="mi">59</span><span class="o">:</span><span class="mf">33.408</span> <span class="n">QYKit_Example</span><span class="p">[</span><span class="mi">18961</span><span class="o">:</span><span class="mi">582784</span><span class="p">]</span> <span class="n">SwizzleTest0</span>
+</code></pre></div>
+<p>确实什么都没有发生。</p>
+<h2>这回来个终极形态看看</h2>
+<div class="highlight"><pre><code class="language-Objective-C" data-lang="Objective-C"><span class="k">@implementation</span> <span class="nc">SwizzleTest0</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">log</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;SwizzleTest0&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+<span class="k">@implementation</span> <span class="nc">SwizzleTest1</span>
+<span class="p">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">load</span> <span class="p">{</span>
+    <span class="p">[</span><span class="nb">self</span> <span class="nl">swizzleInstanceSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">log</span><span class="p">)</span> <span class="nl">withNewSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">new_log</span><span class="p">)];</span>
+<span class="p">}</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">new_log</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;SwizzleTest1&quot;</span><span class="p">);</span>
+    <span class="p">[</span><span class="nb">self</span> <span class="n">new_log</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+<span class="p">[[[</span><span class="n">SwizzleTest0</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">]</span> <span class="n">log</span><span class="p">];</span>
+<span class="p">[[[</span><span class="n">SwizzleTest1</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">]</span> <span class="n">log</span><span class="p">];</span>
+</code></pre></div>
+<p>以上代码全成就达成，要是不出问题我以后就再也不用Swift了（好可怕的誓言）。</p>
+<h1>Boom</h1>
+<div class="highlight"><pre><code class="language-Objective-C" data-lang="Objective-C"><span class="mi">2016</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mi">22</span> <span class="mi">12</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">48.647</span> <span class="n">QYKit_Example</span><span class="p">[</span><span class="mi">19614</span><span class="o">:</span><span class="mi">612474</span><span class="p">]</span> <span class="n">SwizzleTest1</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mi">22</span> <span class="mi">12</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">48.654</span> <span class="n">QYKit_Example</span><span class="p">[</span><span class="mi">19614</span><span class="o">:</span><span class="mi">612474</span><span class="p">]</span> <span class="o">-</span><span class="p">[</span><span class="n">SwizzleTest0</span> <span class="n">new_log</span><span class="p">]</span><span class="o">:</span> <span class="n">unrecognized</span> <span class="n">selector</span> <span class="n">sent</span> <span class="n">to</span> <span class="n">instance</span> <span class="mh">0x7fab98c07120</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mi">22</span> <span class="mi">12</span><span class="o">:</span><span class="mo">04</span><span class="o">:</span><span class="mf">48.659</span> <span class="n">QYKit_Example</span><span class="p">[</span><span class="mi">19614</span><span class="o">:</span><span class="mi">612474</span><span class="p">]</span> <span class="o">***</span> <span class="n">Terminating</span> <span class="n">app</span> <span class="n">due</span> <span class="n">to</span> <span class="n">uncaught</span> <span class="n">exception</span> <span class="err">&#39;</span><span class="n">NSInvalidArgumentException</span><span class="err">&#39;</span><span class="p">,</span> <span class="nl">reason</span><span class="p">:</span> <span class="err">&#39;</span><span class="o">-</span><span class="p">[</span><span class="n">SwizzleTest0</span> <span class="n">new_log</span><span class="p">]</span><span class="o">:</span> <span class="n">unrecognized</span> <span class="n">selector</span> <span class="n">sent</span> <span class="n">to</span> <span class="n">instance</span> <span class="mh">0x7fab98c07120</span><span class="err">&#39;</span>
+</code></pre></div>
+<p>看来我保住了我的饭碗。</p>
+<h1>总结</h1>
+<p>所以说那段代码就是防止由于父类的方法被替换掉而导致悲剧的发生。<code>class_addMethod</code>方法会在当前类没有某方法的情况下动态的添加一个，这样父类的方法就不会被替换掉了，取而代之是我们新添加的方法。至于为什么父类的相应方法会被替换掉那就是另一个荡气回肠的故事了，不是我不讲给你听，是我也不是很清楚（好吧，其实我还是听清楚的，就是懒得写了）。所以为了避免悲剧的发生，还是老老实实的按最佳实践来就万事大吉了。</p>
+<h1>PS 其实还有一种情况</h1>
+<div class="highlight"><pre><code class="language-Objective-C" data-lang="Objective-C"><span class="k">@implementation</span> <span class="nc">SwizzleTest0</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">log</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;SwizzleTest0&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+<span class="k">@implementation</span> <span class="nc">SwizzleTest1</span>
+<span class="p">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">load</span> <span class="p">{</span>
+    <span class="p">[</span><span class="nb">self</span> <span class="nl">swizzleInstanceSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">log</span><span class="p">)</span> <span class="nl">withNewSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">new_log</span><span class="p">)];</span>
+<span class="p">}</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">new_log</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;SwizzleTest1&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+<span class="p">[[[</span><span class="n">SwizzleTest0</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">]</span> <span class="n">log</span><span class="p">];</span>
+<span class="p">[[[</span><span class="n">SwizzleTest1</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">]</span> <span class="n">log</span><span class="p">];</span>
+</code></pre></div>
+<p>其实之前崩溃的直接原因并不是因为父类的方法被替换了，而是父类并没有我们新添加的方法，所以我们看到的崩溃原因是<code>unrecognized selector sent to instance</code>。如果不在新方法里调用原有方法，就不会崩溃了，但是运行结果也同样不是我们想要的。</p>
+<div class="highlight"><pre><code class="language-Objective-C" data-lang="Objective-C"><span class="mi">2016</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mi">22</span> <span class="mi">13</span><span class="o">:</span><span class="mi">49</span><span class="o">:</span><span class="mf">22.236</span> <span class="n">QYKit_Example</span><span class="p">[</span><span class="mi">30041</span><span class="o">:</span><span class="mi">1014679</span><span class="p">]</span> <span class="n">SwizzleTest1</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mi">22</span> <span class="mi">13</span><span class="o">:</span><span class="mi">49</span><span class="o">:</span><span class="mf">22.243</span> <span class="n">QYKit_Example</span><span class="p">[</span><span class="mi">30041</span><span class="o">:</span><span class="mi">1014679</span><span class="p">]</span> <span class="n">SwizzleTest1</span>
+</code></pre></div>
+<p>可以看到父类的方法已经被干掉了，这样不好不好。</p>
+<p>以上</p>
+  <footer class="post-footer">
+    <section class="author">
+      <h4>Wingzki</h4>
+      <p>An iOS Developer</p>
+    </section>
+<aside class="share">
+  <h4>Share this.</h4>
+  <a href="http://twitter.com/share?text=Swizzle的时候为什么要使用class_addMethod方法&amp;url=http://wingzki.github.io/Swizzle/&amp;hashtags=web,dev,blog,soudev&amp;via=nandomoreirame"
+  onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://wingzki.github.io/Swizzle/"
+  onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+</aside>
+      <hr>
+<aside id="comments" class="disqus">
+  <h3 class="txt-center"><i class="fa fa-comments"></i> Comments</h3>
+  <hr>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_identifier = '/Swizzle';
+    var disqus_title = 'Swizzle的时候为什么要使用class_addMethod方法';
+    var disqus_url = 'http://wingzki.github.io/Swizzle/';
+    /*var disqus_developer = 1;*/
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>
+    Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+  </noscript>
+</aside>
+  </footer>
+</article>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="https://github.com/Wingzki" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>Stay Hungry Stay Foolish</q>
+      <small>– Steve Jobs</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="https://github.com/Wingzki/wingzki.github.io.git" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 3 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>

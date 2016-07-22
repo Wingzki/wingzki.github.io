@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+  <head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="alternate" href="http://wingzki.github.io" hreflang="pt-BR">
+<link href="http://gmpg.org/xfn/11" rel="profile">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="theme-color" content="#005344">
+<title>Wingzki | An iOS Developer</title>
+<meta name="google-site-verification" content="zS1dSn20XtA4FJYEOQLXqI0boxZdMnJ2g3beje-cl20">
+<meta name="description" content="An iOS Developer">
+<meta name="keywords" content="site, website, loja virtual, lojas virtuais, e-commerce, wordpress, frontend, front-end, html5, css3, javascript, jquery, seo, otimizacao, performance">
+<!-- Social: Facebook / Open Graph -->
+<meta property="og:url" content="http://wingzki.github.io/">
+<meta property="og:title" content="Wingzki | An iOS Developer">
+<meta property="og:description" content="An iOS Developer">
+<meta property="og:site_name" content="Wingzki">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:type" content="website">
+<meta property="og:author" content="">
+<meta property="og:image" content="http://wingzki.github.io">
+<!-- Social: Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@nandomoreirame">
+<meta name="twitter:domain" content="http://wingzki.github.io">
+<meta name="twitter:title" content="Wingzki | An iOS Developer">
+<meta name="twitter:description" content="An iOS Developer">
+<meta name="twitter:image:src" content="http://wingzki.github.io">
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="114x114" href="http://wingzki.github.io/assets/ico/apple-touch-icon-114-923860ccd1961134acc9b15cb0c2bd58.png">
+<link rel="apple-touch-icon" sizes="72x72" href="http://wingzki.github.io/assets/ico/apple-touch-icon-72-328c9f2cc26bd042c9a33ac6c426ed6f.png">
+<link rel="apple-touch-icon" href="http://wingzki.github.io/assets/ico/apple-touch-icon-57-d8bed54f3b3b01450f2c2ff1adf141ca.png">
+<link rel="shortcut icon" href="http://wingzki.github.io/assets/ico/favicon-96ff269699aee05d4bebaf2c5e47a07e.png">
+<!-- rel prev and next -->
+<!-- Canonical link tag -->
+<link rel="canonical" href="http://wingzki.github.io/">
+<link rel="alternate" type="application/rss+xml" title="Wingzki" href="http://wingzki.github.io/feed.xml">
+<link rel="stylesheet" href="/assets/main-e03fd29918e6a55fb4e40f4e044772fc.css">
+<script src="/assets/modernizr-custom-cb807611a3e262b2eac59444cbab74d6.js" data-cfasync="false"></script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Website",
+  "publisher": "http://wingzki.github.io",
+  "url": "http://http://wingzki.github.io/",
+  "description": "An iOS Developer"
+}
+</script>
+<script type="text/javascript">
+  var disqus_shortname = 'wingzkisblog',
+      baseurl          = '';
+</script>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-52446115-1']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+    <meta name="robots" content="noindex"> <!--=====  Please remove it ! ! !  ======-->
+    <meta name="googlebot" content="noindex"> <!--=====  Please remove it ! ! !  ======-->
+  </head>
+  <body class="page-template home">
+    <header class="header alt">
+  <div class="container">
+    <h1><a href="/"><strong>wingzki</strong>.github.io</a></h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#!" data-modal="modalSearch"><i class="fa fa-search"></i></a></li>
+        <li><a href="/feed.xml" target="_blank"><i class="fa fa-feed"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+      <section class="banner">
+  <img src="/assets/images/author.jpg" alt="author thumb" class="dot animated hinge fadeInDown">
+  <h2 class="animated hinge fadeInDown" itemscope itemtype="http://schema.org/Person">Hello, this is <strong itemprop="name">Wingzki</strong>An iOS Developer</h2>
+</section>
+    <main class="wrapper container" itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/Blog">
+<article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1 class="post-title"><a href="/Swizzle/" title="Permalink to Swizzle的时候为什么要使用class_addMethod方法">Swizzle的时候为什么要使用class_addMethod方法</a></h1>
+  </header>
+  <p><a href="/Swizzle/" title="Permalink to Swizzle的时候为什么要使用class_addMethod方法" class="read-more">Swizzle的最佳实践 + (void) swizzleInstanceSelector:(SEL)originalSelector withNewSelector:(SEL)newSelector { Method originalMethod = class_getInstanceMethod(self, originalSelector); Method newMethod = class_getInstanceMethod(self, newSelector); BOOL methodAdded = class_addMethod([self class], originalSelector, method_getImplementation(newMethod), method_getTypeEncoding(newMethod)); if (methodAdded) { class_replaceMethod([self class], newSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod)); } else { method_exchangeImplementations(originalMethod, newMethod); } } 大部分看文章的人应该都知道一个完美的Swizzle方法应该长这个模样，网上也是资料一大把，用起来也非常容易，无非就是在+load方法中调用一下就行了。但是有多少人仔细看过这段代码，有多少人完全理解每一行作用，反正在之前的很长一段时间里我是一知半解的半懵逼状态。 很多文章都有写对这段代码的分析和研究，但我发现并没有什么文章对其中的一段代码有很好的解释，一般只是说为了避免父类的方法被替换掉，仅此而己。就是下面这句，以及后面的if语句： BOOL methodAdded = class_addMethod([self class], originalSelector, method_getImplementation(newMethod), method_getTypeEncoding(newMethod)); 我写这篇文章主要目的就是探讨一下这段代码究竟为什么要出现在这里，以及没有这一段究竟会发生什么。...</a></p>
+  <footer class="post-meta">
+    <time datetime="2016-07-22">
+      <i class="fa fa-calendar-o"></i> 
+    </time>
+    <span>
+      <i class="fa fa-comments"></i> <a href="/Swizzle/#disqus_thread" data-disqus-identifier="/Swizzle">Leave a comment</a>
+    </span>
+    <span>
+        <i class="fa fa-folder-open-o"></i> <a href="/category/reactivecocoa/">ReactiveCocoa</a>
+    </span>
+  </footer>
+</article>
+<article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1 class="post-title"><a href="/Reactivecocoa-Codebutton/" title="Permalink to 使用ReactiveCocoa实现一个手机验证码发送按钮">使用ReactiveCocoa实现一个手机验证码发送按钮</a></h1>
+  </header>
+  <p><a href="/Reactivecocoa-Codebutton/" title="Permalink to 使用ReactiveCocoa实现一个手机验证码发送按钮" class="read-more">更新 这几天在网上看到了几个其它的类似实现，对比了一下，感觉在可扩展性和代码结构上我这种实现方法都是更优的。而且使用UIButton的rac_command来绑定事件要明显优于使用rac_signalForControlEvents方法，因为使用rac_command可以省去禁用button的相关操作。唯一一个不爽的地方是使用了一个NSInteger类型的临时变量做计数器，我最近一直在考虑怎么干掉它，等我想明白了会更新代码。 更新完毕 对于ReactiveCocoa这个学些曲线非常陡峭的类库来说，一但掌握了正确的使用方法，可以有效的提升开发效率。不过如果使用方法不得当，后果也是灾难性的。请根据实际情况酌情考虑使用。 以上 在移动应用中手机验证码发送是一个常规的需求，在公司最新版的应用中我尝试了一下用ReactiveCocoa去实现这个功能，效果拔群。 将请求封装为一个Signal 首先把用于从服务器请求验证法的Http请求封装为一个Signal，下面这个方法可以很方便的把一个异步操作变为一个Signal。 + (RACSignal *)createSignal:(RACDisposable * (^)(id&lt;RACSubscriber&gt; subscriber))didSubscribe - (RACSignal *)startCodeRequestWithPhoneNumber:(NSString *)phoneNumber countryCode:(NSString *)countryCode { return [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) { QYVerifyCodeRequest *request = [[QYVerifyCodeRequest alloc] initWithPhoneNumber:phoneNumber countryCode:countryCode]; [request startWithSuccess:^(id results, QYBaseRequest *request) { [subscriber sendCompleted]; } failure:^(QYBaseRequest *request) { [subscriber sendError:[NSError errorWithDomain:@&quot;&quot; code:0...</a></p>
+  <footer class="post-meta">
+    <time datetime="2016-05-12">
+      <i class="fa fa-calendar-o"></i> 
+    </time>
+    <span>
+      <i class="fa fa-comments"></i> <a href="/Reactivecocoa-Codebutton/#disqus_thread" data-disqus-identifier="/Reactivecocoa-Codebutton">Leave a comment</a>
+    </span>
+    <span>
+        <i class="fa fa-folder-open-o"></i> <a href="/category/reactivecocoa/">ReactiveCocoa</a>
+    </span>
+  </footer>
+</article>
+<article class="post" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <header class="post-header">
+    <h1 class="post-title"><a href="/First-Commit/" title="Permalink to First Commit">First Commit</a></h1>
+  </header>
+  <p><a href="/First-Commit/" title="Permalink to First Commit" class="read-more">为什么开始写博客
+传说一个程序员要想找到好工作就要有一个技术Blog，然而我已经有了一份自认为还不错的工作。
+好吧，我只能违心的说因为我是一个有追求的程序员，所以我打算开始写博客。
+会经常更新吗
+我打算一个月更新两篇，然而这只是打算，很可能你看到的就是最后一篇，虽然我知道这是不对的。
+Blog的文章一般是什么内容
+我猜大部分应该是技术类文章，因为我是个iOS程序员。不排除有吐槽文章的存在，没准也会放几张高达的照片。
+</a></p>
+  <footer class="post-meta">
+    <time datetime="2016-05-06">
+      <i class="fa fa-calendar-o"></i> 
+    </time>
+    <span>
+      <i class="fa fa-comments"></i> <a href="/First-Commit/#disqus_thread" data-disqus-identifier="/First-Commit">Leave a comment</a>
+    </span>
+    <span>
+        <i class="fa fa-folder-open-o"></i> <a href="/category/welcome/">Welcome</a>
+    </span>
+  </footer>
+</article>
+<nav class="pagination" role="pagination">
+  <span class="page-number">Page 1 of 1</span>
+</nav>
+    </main>
+<footer class="footer">
+  <div class="container">
+    <ul class="icons">
+      <li>
+        <a href="https://github.com/Wingzki" class="icon-github" target="_blank">
+          <i class="fa fa-github"></i>
+        </a>
+      </li>
+    </ul>
+    <p>
+      <q>Stay Hungry Stay Foolish</q>
+      <small>– Steve Jobs</small>
+    </p>
+    <small class="clearfix">
+      Made with <a href="http://jekyllrb.com" target="_blank">Jekyll</a> • <a href="https://github.com/Wingzki/wingzki.github.io.git" target="_blank">Open source <i class="fa fa-heart"></i></a>
+    </small>
+  </div>
+</footer>
+<a class="scroll-up fa fa-chevron-up bounce" href="#" data-position="0"></a>
+<div id="modalSearch" class="modal">
+  <div class="modal__overlay"></div>
+  <div class="modal__content">
+    <a href="#!" class="modal-close" data-modal-close>&times;</a>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search in 3 articles">
+      <ul id="results-container"></ul>
+    </div>
+  </div>
+</div>
+    <script src="/assets/main-52d417e8a6ff9f5b168386d37c96338a.js"></script>
+  </body>
+</html>
